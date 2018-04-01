@@ -1,0 +1,35 @@
+layout(vertices = 3) out;
+in vec3 vPosition[];
+in VS_OUT {
+    vec4 color;
+} tc_in[];
+
+out TC_OUT {
+  vec4 color;
+} tc_out[];
+
+out vec3 tcPosition[];
+#define ID gl_InvocationID
+uniform vec3 timeVec;
+void main()
+{
+float mixFactor = 1.0;
+float maxMix = 25.0;
+float minMix = 1.0;
+if(timeVec.y < 3.14){
+mixFactor = mix(minMix,maxMix, timeVec.y/3.14);
+}else{
+mixFactor = mix(maxMix, minMix, (timeVec.y-3.14)/3.14);
+}
+float TessLevelInner = mixFactor;
+float TessLevelOuter = mixFactor;
+    tc_out[ID].color = tc_in[ID].color;
+
+    tcPosition[ID] = vPosition[ID];
+    if (ID == 0) {
+        gl_TessLevelInner[0] = TessLevelInner;
+        gl_TessLevelOuter[0] = TessLevelOuter;
+        gl_TessLevelOuter[1] = TessLevelOuter;
+        gl_TessLevelOuter[2] = TessLevelOuter;
+    }
+}

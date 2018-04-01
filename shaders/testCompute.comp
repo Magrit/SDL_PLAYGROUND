@@ -1,0 +1,30 @@
+#version 430
+layout(rgba8, location = 0) uniform image2D destTex;
+layout (local_size_x = 3, local_size_y = 3) in;
+const float kernel[9] = {1.0, 1.0, 1.0,
+                        1.0, -8.0, 1.0,
+                        1.0, 1.0, 1.0};
+void main()
+{
+    ivec2 storePos = ivec2(gl_GlobalInvocationID.xy);
+    ivec2 localPos = ivec2(gl_LocalInvocationID.xy);
+    float localLength = length(vec2(ivec2(gl_LocalInvocationID.xy))/9.0);
+    vec4 value[9];
+    int place = 0;
+    for(int i = -1; i < 2; i++)
+    {
+        for(int j=-1; j < 2; j++)
+        {
+            value[place] = imageLoad(destTex, ivec2(storePos.x+i, storePos.y+j));
+            place++;
+        }
+    }
+
+    vec4 col = vec4(0.0);
+    for(int k = 0; k < 9; k++)
+    {
+        col += value[k]*kernel[k];
+    }
+    imageStore(destTex, storePos, col);
+    // imageStore(destTex, storePos, imageLoad(destTex, storePos));
+}

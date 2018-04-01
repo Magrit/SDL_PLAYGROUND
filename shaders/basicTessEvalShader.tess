@@ -1,0 +1,22 @@
+layout(triangles, equal_spacing, cw) in;
+in vec3 tcPosition[];
+in TC_OUT{
+  vec4 color;
+}te_in[];
+out TE_OUT{
+  vec4 color;
+}te_out;
+out vec3 tePosition;
+out vec3 tePatchDistance;
+
+void main()
+{
+
+    vec3 p0 = gl_TessCoord.x * tcPosition[0];
+    vec3 p1 = gl_TessCoord.y * tcPosition[1];
+    vec3 p2 = gl_TessCoord.z * tcPosition[2];
+    te_out.color = vec4(gl_TessCoord, 1.0);//te_in[0].color;
+    tePatchDistance = gl_TessCoord;
+    tePosition = normalize(p0 + p1 + p2);
+    gl_Position = vec4(tePosition, 1.0);
+}
