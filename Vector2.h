@@ -13,6 +13,14 @@ public:
     : x(inX)
     , y(inY)
   {}
+  
+
+  template <typename T2>
+  inline XVector2<T> operator+(const XVector2<T2>& rhs) const { return { x + T(rhs.x), y + T(rhs.y) }; }
+   
+  template <typename T2>
+  inline XVector2<T> operator-(const XVector2<T2>& rhs) const { return { x - T(rhs.x), y - T(rhs.y) }; }
+  
 
   T x, y;
 };
