@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <string>
-#include "Window.h"
+#include <Window.h>
 #include <iostream>
 Window::Window(int width, int height)
   : _width(width), _height(height)
