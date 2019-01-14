@@ -1,4 +1,4 @@
-# SDL_SPECIAL_BARNACLE
+# SDL_PLAYGROUND
 
 
 A non-serious sandbox for some 2D OpenGL SDL implementation.
